@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Guessing Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #e0f7fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        text-align: center;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        animation: bounceIn 1s ease-in;
+      }
+      .container h1 {
+        margin-bottom: 20px;
+        color: #00796b;
+      }
+      .container .range-info {
+        margin-bottom: 20px;
+        font-size: 16px;
+        color: #004d40;
+      }
+      .container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .container input[type="number"] {
+        padding: 10px;
+        margin: 10px 0;
+        width: 100px;
+        font-size: 16px;
+        border: 1px solid #00796b;
+        border-radius: 5px;
+      }
+      .container input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #00796b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .container input[type="submit"]:hover {
+        background-color: #004d40;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #004d40;
+      }
+      /* Add some animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes bounceIn {
+        from,
+        20%,
+        40%,
+        60%,
+        80%,
+        to {
+          animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        from {
+          opacity: 0;
+          transform: scale3d(0.3, 0.3, 0.3);
+        }
+        20% {
+          transform: scale3d(1.1, 1.1, 1.1);
+        }
+        40% {
+          transform: scale3d(0.9, 0.9, 0.9);
+        }
+        60% {
+          opacity: 1;
+          transform: scale3d(1.03, 1.03, 1.03);
+        }
+        80% {
+          transform: scale3d(0.97, 0.97, 0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale3d(1, 1, 1);
+        }
+      }
+      .container {
+        animation: bounceIn 1s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Guess the Number</h1>
+      <p class="range-info">The number to guess is between 1 and 1000.</p>
+      <form id="guessForm" action="{{ url_for('guess') }}" method="post">
+        <label for="guess">Enter your guess:</label>
+        <input type="number" id="guess" name="guess" required />
+        <input type="submit" value="Submit" />
+      </form>
+      <div class="result" id="result">
+        {% if result %}
+        <p>{{ result }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <script>
+      // Add event listener for Enter key
+      document
+        .getElementById("guess")
+        .addEventListener("keydown", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("guessForm").submit();
+          }
+        });
+    </script>
+  </body>
+</html>
